@@ -1,0 +1,175 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 0;
+  p {
+    margin-right: 1.5rem;
+  }
+  img {
+    width: 150px;
+  }
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.error {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.ct-chart-line {
+  margin-bottom: 4rem !important;
+  transform: scale(1.1);
+}
+
+.ct-series-a .ct-line {
+  stroke: #77C9FF !important;
+  stroke-width: 5px;
+}
+
+.ct-series-a .ct-point {
+  stroke: #358ec9 !important;
+}
+
+.ct-series-a .ct-area {
+  fill: #77C9FF !important;
+}
+
+header {
+  background-color: #77C9FF;
+  padding: 3rem 0;
+  color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  h1 {
+    color: #1A679A;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+  }
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #77C9FF;
+  color: #1A679A;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 2rem;
+}
+
+svg {
+  display: block;
+}
+
+.tweet {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid black;
+  .top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    img {
+      margin-right: 1rem;
+      border-radius: 100%;
+    }
+  }
+  .date {
+    margin-top: 1rem;
+  }
+}
+
+.event {
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid black;
+  .date {
+    margin-top: 1rem;
+  }
+}
+
+.coin {
+  background-color: #f0f9ff;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 51%;
+  border: 2px dashed transparent;
+  h3 {
+    margin-bottom: 1rem;
+  }
+  .rank {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #77C9FF;
+    color: white;
+    font-weight: bold;
+  }
+  a {
+    text-decoration: none;
+    color: unset;
+  }
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  &:hover {
+    border-color: #77C9FF;
+  }
+}
+
+table {
+  width: 100%;
+  th {
+    text-align: left;
+  }
+  th, td {
+    padding: 0.5rem;
+  }
+  tr {
+    background-color: rgb(241, 241, 241);
+    &:nth-child(odd) {
+      background-color: white;
+    }
+  }
+}
+
+.volume {
+  margin-top: 2rem;
+}

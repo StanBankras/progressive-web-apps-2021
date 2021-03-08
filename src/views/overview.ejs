@@ -1,0 +1,48 @@
+<%- include('./partials/header'); %>
+
+<% coins.forEach(coin=> { %>
+<article class="coin">
+  <p class="rank">
+    #<%- coin.rank %>
+  </p>
+  <a href="/coin/<%- coin.id %>">
+    <h3>
+      <%- coin.name %>
+    </h3>
+  </a>
+  <div class="wrapper">
+    <% if(coin.recentTweet) { %>
+    <a href="/coin/<%- coin.id %>">
+      <section class="tweet">
+        <div class="top">
+          <img src="<%- coin.recentTweet.user_image_link %>">
+          <h3 class="handle">@<%- coin.recentTweet.user_name %></h3>
+        </div>
+        <p class="content"><%- coin.recentTweet.status %></p>
+        <p><%- coin.recentTweet.date %></p>
+      </section>
+    </a>
+    <% } %>
+
+    <% if(coin.recentEvent) { %>
+    <section class="event">
+      <h3>
+        <a
+          href="<%- coin.recentEvent.link %>">
+          <%- coin.recentEvent.name %>
+        </a>
+      </h3>
+      <p class="description">
+        <%- coin.recentEvent.description %>
+      </p>
+      <p>
+        <%- coin.recentEvent.date %>
+      </p>
+    </section>
+    <% } %>
+  </div>
+</article>
+
+<% }); %>
+
+<%- include('./partials/footer'); %>
