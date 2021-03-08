@@ -22,12 +22,12 @@ app.set('views', path.join(__dirname, "..", "src", "views"));
   }, 300000);
   
   app.get('/', function(req, res) {   
-    res.render('overview', { coins });
+    res.render('overview', { coins, public: '/' });
   });
   
   app.get('/coin/:id', function(req, res) {   
     const coin = coins.find(c => c.id === req.params.id);
-    res.render('detail', { coin });
+    res.render('detail', { coin, public: '../../' });
   });
   
   app.listen(port, function() {
