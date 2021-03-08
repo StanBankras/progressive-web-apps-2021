@@ -1,13 +1,32 @@
 import { cpData } from '../modules/api';
 import { getLatestItemByDate } from '../modules/utils';
+import Tweet from './Tweet';
+import Event from './Event';
 
 export default class CryptoCurrency {
 
-  constructor(id, symbol, name, rank) {
+  public id: string;
+  public symbol: string;
+  public name: string;
+  public rank: number;
+  private tweets: Tweet[];
+  private events: Event[];
+  public recentTweet: Tweet;
+  public recentEvent: Event;
+  public markets: any[];
+  public monthlyData: any[];
+
+  constructor(id: string, symbol: string, name: string, rank: number) {
     this.id = id;
     this.symbol = symbol;
     this.name = name;
     this.rank = rank;
+    this.tweets = [];
+    this.events = [];
+    this.recentTweet = '';
+    this.recentEvent = '';
+    this.markets = [];
+    this.monthlyData = [];
   }
 
   async refreshData() {
@@ -17,9 +36,9 @@ export default class CryptoCurrency {
     this.monthlyData = await this.getMonthlyChartData();
   }
   
-  async getCoinTwitterTimeline() {
+  async getCoinTwitterTimeline(): Promise<Tweet[]> {
     let data = await cpData(`/coins/${this.id}/twitter`) || [];
-    data = data.filter(d => !d.is_retweet);
+    data = data.filter((d: any) => !d.is_retweet);
     
     if(data && data.length > 0) {
       this.recentTweet = this.getMostRecentTweet(data);
@@ -28,12 +47,12 @@ export default class CryptoCurrency {
     return data;
   }
 
-  getMostRecentTweet(tweets) {
-    return getLatestItemByDate(tweets, 'date');
+  getMostRecentTweet(tweets: Tweet[]): Tweet {
+    return getLatestItemByDate(tweets as [], 'date');
   }
 
-  getMostRecentEvent(events) {
-    return getLatestItemByDate(events, 'date');
+  getMostRecentEvent(events: Tweet[]): Tweet {
+    return getLatestItemByDate(events as [], 'date');
   }
 
   async getCoinMarketsById() {
@@ -41,8 +60,8 @@ export default class CryptoCurrency {
     return response.slice(0, Math.min(response.length, 20));
   }
 
-  async getCoinEvents() {
-    const data = await cpData(`/coins/${this.id}/events`) || {};
+  async getCoinEvents(): Promise<Event[]> {
+    const data = await cpData(`/coins/${this.id}/events`) || [];
     
     if(data && data.length > 0) {
       this.recentEvent = this.getMostRecentEvent(data);
@@ -52,7 +71,7 @@ export default class CryptoCurrency {
   }
 
   async getMonthlyChartData() {
-    const startDate = new Date();
+    const startDate: Date = new Date();
     // Get the date of 30 days ago
     startDate.setDate(startDate.getDate() - 30);
     return await cpData(

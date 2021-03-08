@@ -6,16 +6,13 @@
   "author": "Stan Bankras <stanbankras@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon src/server.ts"
   },
   "dependencies": {
-    "@babel/core": "^7.13.8",
+    "@types/express": "^4.17.11",
+    "@types/node-fetch": "^2.5.8",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
-    "@babel/node": "^7.13.0",
-    "@babel/preset-env": "^7.13.9"
   }
 }

@@ -1,33 +1,33 @@
 import express from 'express';
 import path from 'path';
 import { initializeData } from './modules/api';
+import CryptoCurrency from './models/CryptoCurrency';
 
 const app = express();
-const port = 3000;
+const port: number = 3000;
 
 app.use(express.static(path.join(__dirname, "..", "src", "public")));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, "..", "src", "views"));
 
 (async () => {
+
   console.log('Retrieving initial essential data...');
+  let coins: CryptoCurrency[] = await initializeData();
+  coins = coins.filter((c: CryptoCurrency) => c.rank <= 20);
 
-  let coins = await initializeData();
-  coins = coins.filter(c => c.rank <= 3)
-
-  await Promise.all(coins.map(async c => c.refreshData()));
-
-  setInterval(() => {
-    coins.map(async c => c.refreshData())
-  }, 300000);
+  console.log('Top 20 loaded, loading more details of the top 20 now...');
+  await Promise.all(coins.map(async (c: CryptoCurrency) => c.refreshData()));
   
   app.get('/', function(req, res) {   
     res.render('overview', { coins, public: '/' });
   });
   
   app.get('/coin/:id', function(req, res) {   
-    const coin = coins.find(c => c.id === req.params.id);
-    const rows = coin.markets.map(m => {
+    const coin: CryptoCurrency | undefined = coins.find(c => c.id === req.params.id);
+    if (!coin) return res.sendStatus(404);
+
+    const tr = coin.markets.map((m: any) => {
       return {
         'Exchange': m.exchange_name,
         'Pair': m.pair,
@@ -36,14 +36,15 @@ app.set('views', path.join(__dirname, "..", "src", "views"));
         '24h volume': `${m.quotes[Object.keys(m.quotes)[0]].volume_24h.toFixed(2)}`
       }
     });
-    
+
+    const th = Object.keys(tr[0]);
+    const table = { headers: th, rows: tr }
+
     res.render('detail', { 
       coin,
-      public: '../../',
-      table: {
-        headers: Object.keys(rows[0]),
-        rows
-      } });
+      table,
+      public: '../../'
+    });
   });
   
   app.listen(port, function() {
