@@ -1,0 +1,21 @@
+{
+  "name": "progressive-web-apps-2021",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/StanBankras/progressive-web-apps-2021.git",
+  "author": "Stan Bankras <stanbankras@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.13.8",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.13.0",
+    "@babel/preset-env": "^7.13.9"
+  }
+}
