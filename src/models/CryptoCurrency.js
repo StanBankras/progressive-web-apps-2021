@@ -12,7 +12,9 @@ export default class CryptoCurrency {
 
   async refreshData() {
     this.tweets = await this.getCoinTwitterTimeline();
+    this.markets = await this.getCoinMarketsById();
     this.events = await this.getCoinEvents();
+    this.monthlyData = await this.getMonthlyChartData();
   }
   
   async getCoinTwitterTimeline() {

@@ -1,5 +1,24 @@
 <%- include('./partials/header'); %>
 
-<%= coin.name %>
+<a href="/" class="back-button">Back to top 20</a>
+
+<h1><span class="capitalize"><%= coin.name%></span> (<%= coin.symbol %>) extra information</h1>
+
+<h2>Markets</h2>
+
+<table>
+  <tr>
+    <% table.headers.forEach(header => { %>
+    <th><%= header %></th>
+    <% }); %>
+  </tr>
+  <% table.rows.forEach(row => { %>
+  <tr>
+    <% Object.keys(row).forEach(key => { %>
+    <td><%= row[key] %></td>
+    <% }) %>
+  </tr>
+  <% }) %>
+</table>
 
 <%- include('./partials/footer'); %>
