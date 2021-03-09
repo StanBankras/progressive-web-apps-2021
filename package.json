@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "clean": "rimraf ./dist",
+    "clean": "rm -rf ./dist",
     "build:assets": "cp -r src/public dist/",
     "build:bundle": "rollup -c",
     "prestart": "yarn run clean && run-p build:*",
