@@ -47,7 +47,11 @@ The concept is to make an alternative to [Coinpaprika](https://coinpaprika.com/)
 to do
 
 ## Resources
-* 
+* [TSConfig docs](https://www.typescriptlang.org/tsconfig)
+* [Options for compiling TS](https://medium.com/@lucksp_22012/3-options-to-compile-typescript-to-js-rollup-tsc-babel-3319977a6946)
+* [ESLint docs](https://eslint.org/)
+* [Converting JS to TS](https://dev.to/animo/convert-an-express-nodejs-app-from-javascript-to-typescript-302l)
+* [NPM run all](https://dev.to/danywalls/how-to-run-multiple-npm-scripts-with-npm-run-all-3ad2)
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
