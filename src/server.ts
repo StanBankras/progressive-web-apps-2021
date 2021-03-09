@@ -8,9 +8,9 @@ import CryptoCurrency from './models/CryptoCurrency';
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'src', 'views'));
+app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 
 (async () => {
 
@@ -44,7 +44,7 @@ app.set('views', path.join(__dirname, '..', 'src', 'views'));
     res.render('detail', { 
       coin,
       table,
-      public: '../../'
+      public: '../'
     });
   });
   

@@ -33,5 +33,6 @@
     "comma-spacing": "warn",
     "comma-style": ["error", "last"],
     "arrow-spacing": ["error", { "before": true, "after": true }]
-  }
+  },
+  "ignorePatterns": ["dist/*.js"]
 }
