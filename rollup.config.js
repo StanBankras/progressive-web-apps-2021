@@ -1,6 +1,6 @@
 // rollup.config.js
 import typescript from '@rollup/plugin-typescript';
-import uglify from '@lopatnov/rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
 
 export default {
   input: 'src/server.ts',
@@ -8,6 +8,9 @@ export default {
     dir: 'dist',
     format: 'cjs'
   },
-  plugins: [typescript(), uglify()],
+  plugins: [
+    typescript(),
+    terser()
+  ],
   external: ['express', 'path', 'node-fetch']
 };
