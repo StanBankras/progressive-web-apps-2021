@@ -1,11 +1,12 @@
 import express from 'express';
 import path from 'path';
+require('dotenv').config();
 
 import { initializeData } from './modules/api';
 import CryptoCurrency from './models/CryptoCurrency';
 
 const app = express();
-const port: number = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 app.set('view engine', 'ejs');
