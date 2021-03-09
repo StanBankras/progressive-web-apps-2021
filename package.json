@@ -1,6 +1,9 @@
 {
   "name": "progressive-web-apps-2021",
   "version": "1.0.0",
+  "engines": {
+    "node": "15.x"
+  },
   "main": "index.js",
   "repository": "https://github.com/StanBankras/progressive-web-apps-2021.git",
   "author": "Stan Bankras <stanbankras@gmail.com>",
