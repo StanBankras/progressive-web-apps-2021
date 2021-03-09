@@ -2,8 +2,8 @@ import express from 'express';
 import path from 'path';
 require('dotenv').config();
 
-import { initializeData } from './modules/init';
 import CryptoCurrency from './models/CryptoCurrency';
+import { cpData } from './modules/api';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,17 +15,20 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 (async () => {
 
   console.log('Retrieving initial essential data...');
-  let topCoins: CryptoCurrency[] = await initializeData();
-
+  let coins: CryptoCurrency[] = await cpData('/coins');
+  coins = coins
+    .map((d: any) => new CryptoCurrency(d.id, d.symbol, d.name, d.rank))
+    .filter((c: CryptoCurrency) => c.rank !== 0 && c.rank <= 20);
+  
   console.log('Top 20 loaded, loading more details of the top 20 now...');
-  await Promise.all(topCoins.map(async c => c.refreshData()));
+  await Promise.all(coins.map(async c => c.refreshData()));
   
   app.get('/', function(req, res) {   
-    res.render('overview', { coins: topCoins, public: '/' });
+    res.render('overview', { coins });
   });
   
   app.get('/coin/:id', function(req, res) {   
-    const coin: CryptoCurrency | undefined = topCoins.find(c => c.id === req.params.id);
+    const coin: CryptoCurrency | undefined = coins.find(c => c.id === req.params.id);
     if (!coin) return res.sendStatus(404);
 
     const tr = coin.markets.map((m: any) => {
@@ -41,11 +44,7 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
     const th = Object.keys(tr[0]);
     const table = { headers: th, rows: tr };
 
-    res.render('detail', { 
-      coin,
-      table,
-      public: '../'
-    });
+    res.render('detail', { coin, table });
   });
   
   app.listen(port, function() {

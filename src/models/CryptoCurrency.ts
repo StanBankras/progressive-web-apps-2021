@@ -1,7 +1,7 @@
 import { cpData } from '../modules/api';
 import { getLatestItemByDate } from '../modules/utils';
-import Tweet from './Tweet';
-import CoinEvent from './CoinEvent';
+import Tweet from '../interfaces/Tweet';
+import CoinEvent from '../interfaces/CoinEvent';
 
 export default class CryptoCurrency {
 
