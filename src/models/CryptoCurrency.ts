@@ -1,7 +1,7 @@
 import { cpData } from '../modules/api';
 import { getLatestItemByDate } from '../modules/utils';
 import Tweet from './Tweet';
-import Event from './Event';
+import CoinEvent from './CoinEvent';
 
 export default class CryptoCurrency {
 
@@ -10,9 +10,9 @@ export default class CryptoCurrency {
   public name: string;
   public rank: number;
   private tweets: Tweet[];
-  private events: Event[];
+  private events: CoinEvent[];
   public recentTweet: Tweet;
-  public recentEvent: Event;
+  public recentEvent: CoinEvent;
   public markets: any[];
   public monthlyData: any[];
 
@@ -23,8 +23,8 @@ export default class CryptoCurrency {
     this.rank = rank;
     this.tweets = [];
     this.events = [];
-    this.recentTweet = '';
-    this.recentEvent = '';
+    this.recentTweet = { image: '', user: '', status: '', date: new Date() };
+    this.recentEvent = { link: '', name: '', description: '', date: new Date() };
     this.markets = [];
     this.monthlyData = [];
   }
@@ -48,11 +48,13 @@ export default class CryptoCurrency {
   }
 
   getMostRecentTweet(tweets: Tweet[]): Tweet {
-    return getLatestItemByDate(tweets as [], 'date');
+    const item: any = getLatestItemByDate(tweets as [], 'date');
+    return { image: item.user_image_link, user: item.user_name, status: item.status, date: item.date };
   }
 
-  getMostRecentEvent(events: Tweet[]): Tweet {
-    return getLatestItemByDate(events as [], 'date');
+  getMostRecentEvent(events: CoinEvent[]): CoinEvent {
+    const item: any = getLatestItemByDate(events as [], 'date');
+    return { link: item.link, name: item.name, description: item.description , date: item.date };
   }
 
   async getCoinMarketsById() {
@@ -60,7 +62,7 @@ export default class CryptoCurrency {
     return response.slice(0, Math.min(response.length, 20));
   }
 
-  async getCoinEvents(): Promise<Event[]> {
+  async getCoinEvents(): Promise<CoinEvent[]> {
     const data = await cpData(`/coins/${this.id}/events`) || [];
     
     if(data && data.length > 0) {

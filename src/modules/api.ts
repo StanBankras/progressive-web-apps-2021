@@ -42,5 +42,5 @@ export async function getCoinByRank(rank: number): Promise<CryptoCurrency | unde
 
 export async function initializeData(): Promise<CryptoCurrency[]> {
   const coins: any = await getAllCoins();
-  return coins.filter((c: CryptoCurrency) => c.rank !== 0);
+  return coins.filter((c: CryptoCurrency) => c.rank !== 0 && c.rank <= 20);
 }
