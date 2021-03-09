@@ -20,7 +20,6 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
-    "rollup-plugin-scss": "^2.6.1",
     "typescript": "^4.2.3"
   },
   "devDependencies": {
@@ -34,9 +33,6 @@
     "eslint": "^7.21.0",
     "npm-run-all": "^4.1.5",
     "rollup": "^2.41.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "sass": "^1.32.8",
-    "sass-loader": "^11.0.1",
-    "terser": "^5.6.0"
+    "rollup-plugin-terser": "^7.0.2"
   }
 }
