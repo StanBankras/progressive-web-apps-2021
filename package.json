@@ -19,7 +19,8 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "typescript": "^4.2.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.17.0",
