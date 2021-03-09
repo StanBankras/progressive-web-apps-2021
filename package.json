@@ -10,7 +10,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "build": "rimraf ./build && tsc -w --outDir build",
+    "tsc": "tsc -w --outDir build",
+    "build": "rimraf ./build && yarn run tsc",
     "start": "node ./build/server.js"
   },
   "dependencies": {
