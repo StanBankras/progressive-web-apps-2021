@@ -10,21 +10,30 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "prestart": "rimraf dist/* && tsc && cp -r src/public dist/",
+    "clean": "rimraf ./dist",
+    "build:ts": "rollup -c",
+    "build:assets": "cp -r src/public dist/",
+    "prestart": "yarn run clean && run-p build:*",
     "start": "node dist/server.js"
   },
   "dependencies": {
-    "@types/express": "^4.17.11",
-    "@types/node-fetch": "^2.5.8",
-    "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "typescript": "^4.2.3"
   },
   "devDependencies": {
+    "@lopatnov/rollup-plugin-uglify": "^2.1.0",
+    "@rollup/plugin-typescript": "^8.2.0",
+    "@types/express": "^4.17.11",
+    "@types/node-fetch": "^2.5.8",
+    "@types/node": "^14.14.32",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
-    "eslint": "^7.21.0"
+    "eslint": "^7.21.0",
+    "rollup": "^2.41.0",
+    "npm-run-all": "^4.1.5",
+    "dotenv": "^8.2.0",
+    "terser": "^5.6.0"
   }
 }

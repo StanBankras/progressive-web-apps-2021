@@ -1,8 +1,6 @@
 import fetch from 'node-fetch';
-import CryptoCurrency from '../models/CryptoCurrency';
 
 const cpBaseUrl = 'https://api.coinpaprika.com/v1';
-let coins: CryptoCurrency[] = [];
 let rateLimitPromise = Promise.resolve();
 
 // Rate limit of 100ms, implementation idea by Alex Bankras
@@ -28,19 +26,4 @@ export async function cpData(url: string, params?: any): Promise<any> {
     });
   });
 
-}
-
-export async function getAllCoins(): Promise<CryptoCurrency[]> {
-  const data: any = await cpData('/coins');
-  return data.map((d: any) => new CryptoCurrency(d.id, d.symbol, d.name, d.rank));
-}
-
-export async function getCoinByRank(rank: number): Promise<CryptoCurrency | undefined> {
-  if (coins.length === 0) await getAllCoins();
-  return coins.find(c => c.rank === rank);
-}
-
-export async function initializeData(): Promise<CryptoCurrency[]> {
-  const coins: any = await getAllCoins();
-  return coins.filter((c: CryptoCurrency) => c.rank !== 0 && c.rank <= 20);
 }

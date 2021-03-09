@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 require('dotenv').config();
 
-import { initializeData } from './modules/api';
+import { initializeData } from './modules/init';
 import CryptoCurrency from './models/CryptoCurrency';
 
 const app = express();
