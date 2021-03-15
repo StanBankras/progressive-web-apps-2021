@@ -22,6 +22,9 @@ export default {
   ],
   external: ['express', 'path', 'node-fetch'],
   watch: {
-    exclude: ['node_modules/**']
+    include: ['src/**'],
+    extra: ['src/**'],
+    exclude: ['node_modules/**'],
+    chokidar: false
   }
 };

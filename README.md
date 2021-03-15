@@ -53,6 +53,7 @@ to do
 * [Converting JS to TS](https://dev.to/animo/convert-an-express-nodejs-app-from-javascript-to-typescript-302l)
 * [NPM run all](https://dev.to/danywalls/how-to-run-multiple-npm-scripts-with-npm-run-all-3ad2)
 * [Getting started with Serviceworkers](https://developers.google.com/web/fundamentals/primers/service-workers)
+* [Expiration date for cache](https://gomakethings.com/how-to-set-an-expiration-date-for-items-in-a-service-worker-cache/)
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
