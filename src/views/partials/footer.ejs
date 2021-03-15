@@ -6,7 +6,7 @@
   </footer>
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
+      window.addEventListener('load', () => {
         navigator.serviceWorker.register('/serviceworker.js').then(registration => {
           // Registration was successful
           console.log('ServiceWorker registration successful with scope: ', registration.scope);

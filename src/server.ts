@@ -46,6 +46,10 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 
     res.render('detail', { coin, table });
   });
+
+  app.get('/offline', function(req, res) {   
+    res.render('offline');
+  });
   
   app.listen(port, function() {
     console.log(`server is running on port ${port}`);
