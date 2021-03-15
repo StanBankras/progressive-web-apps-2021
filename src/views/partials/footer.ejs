@@ -1,8 +1,22 @@
       </div>
     </main>
-    <footer>
-      <p>Powered by</p>
-      <img src="/img/coinpaprika-logo.svg" alt="coinpaprika-logo">
-    </footer>
+  <footer>
+    <p>Powered by</p>
+    <img src="/img/coinpaprika-logo.svg" alt="coinpaprika-logo">
+  </footer>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/serviceworker.js').then(registration => {
+          // Registration was successful
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, err => {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
   </body>
+
 </html>
