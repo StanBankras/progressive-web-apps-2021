@@ -54,9 +54,9 @@ self.addEventListener('fetch', event => {
             }).catch(() => caches.match('/offline/'));
 
             return response;
-          });
+          }).catch(() => caches.match('/offline/'));
         }
-      }).catch(() => caches.match('/offline/'))
+      })
     );
   } else {
     event.respondWith(fetch(event.request.url).catch(() => caches.match('/offline/')));
