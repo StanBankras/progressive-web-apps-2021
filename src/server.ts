@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
   await Promise.all(coins.map(async c => c.refreshData()));
   
   app.get('/', function (req, res) {
-    if (req.stale) return res.sendStatus(304);
     return res.render('overview', { coins });
   });
   

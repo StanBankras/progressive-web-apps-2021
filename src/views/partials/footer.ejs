@@ -7,7 +7,6 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.addEventListener('message', event => {
-        console.log(JSON.parse(event.data));
         if(JSON.parse(event.data).type === 'refresh') {
           window.location.reload();
         }
