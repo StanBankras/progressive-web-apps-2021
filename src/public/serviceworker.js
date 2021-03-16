@@ -1,4 +1,4 @@
-const cacheName = 'pages_v1';
+const cacheName = 'v1';
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -27,16 +27,14 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  if (!isHtmlGetRequest(event.request)) {
-    event.respondWith(fetch(event.request.url).catch(() => caches.match('/offline/')));
-  } else {
+  if (isHtmlGetRequest(event.request) || isMainResourceGetRequest(event.request)) {
     event.respondWith(
       caches.match(event.request).then(cache => {
         if (cache && isValid(cache)) {
           console.log('Served from cache!');
           return cache;
         } else {
-          event.waitUntil(fetch(event.request).then(response => {
+          return fetch(event.request).then(response => {
             if (!response) {
               return caches.match('/offline/');
             }
@@ -53,14 +51,15 @@ self.addEventListener('fetch', event => {
                   headers: headers
                 }));
               });
-            });
+            }).catch(() => caches.match('/offline/'));
 
-            console.log('Served from server!');
             return response;
-          }));
+          });
         }
       }).catch(() => caches.match('/offline/'))
     );
+  } else {
+    event.respondWith(fetch(event.request.url).catch(() => caches.match('/offline/')));
   }
 })
 
@@ -73,4 +72,8 @@ function isValid(response) {
 
 function isHtmlGetRequest(request) {
   return request.method === 'GET' && request.destination === 'document';
+}
+
+function isMainResourceGetRequest(request) {
+  return request.method === 'GET' && (request.destination === 'style' || request.url.includes('manifest'));
 }
