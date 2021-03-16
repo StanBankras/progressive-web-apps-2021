@@ -29,45 +29,27 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (isHtmlGetRequest(event.request) || isMainResourceGetRequest(event.request)) {
     event.respondWith(
-      caches.match(event.request).then(cache => {
-        if (cache && isValid(cache)) {
-          console.log('Served from cache!');
-          return cache;
-        } else {
-          return fetch(event.request).then(response => {
-            if (!response) {
-              return caches.match('/offline/');
-            }
-            const copy = response.clone();
-
-            caches.open(cacheName).then(cache => {
-              const headers = new Headers(copy.headers);
-              headers.append('sw-fetched-on', new Date());
-
-              return copy.blob().then(body => {
-                return cache.put(event.request, new Response(body, {
-                  status: copy.status,
-                  statusText: copy.statusText,
-                  headers: headers
-                }));
-              });
-            }).catch(() => caches.match('/offline/'));
-
-            return response;
-          }).catch(() => caches.match('/offline/'));
-        }
-      })
+      caches.open(cacheName)
+        .then(cache => cache.match(event.request))
+        .then(response => response ? response : fetchAndCache(event.request, cacheName))
+        .catch(() => caches.match('/offline/'))
     );
   } else {
-    event.respondWith(fetch(event.request.url).catch(() => caches.match('/offline/')));
+    event.respondWith(
+      fetch(event.request.url).catch(() => caches.match('/offline/'))
+    );
   }
-})
+});
 
-function isValid(response) {
-  if (!response) return false;
-  const fetched = response.headers.get('sw-fetched-on');
-  if (fetched && (new Date(fetched).getTime() + (1000 * 60 * 60 * 2)) > Date.now()) return true;
-  return false;
+function fetchAndCache(request, cacheName) {
+  return fetch(request).then(response => {
+    const copy = response.clone();
+    caches.open(cacheName).then(cache => {
+      cache.put(request, copy);
+    });
+
+    return response;
+  }).catch(() => caches.match('/offline/'));
 }
 
 function isHtmlGetRequest(request) {
@@ -75,5 +57,5 @@ function isHtmlGetRequest(request) {
 }
 
 function isMainResourceGetRequest(request) {
-  return request.method === 'GET' && (request.destination === 'style' || request.url.includes('manifest'));
+  return request.method === 'GET' && (request.destination === 'style' || request.destination === 'image' || request.url.includes('manifest'));
 }
