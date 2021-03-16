@@ -7,19 +7,15 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.addEventListener('message', event => {
-        if(JSON.parse(event.data).type === 'refresh') {
+        const data = JSON.parse(event.data);
+        if(window.location.href === data.url && data.type === 'refresh') {
+          console.log('refresh');
           window.location.reload();
         }
       });
 
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/serviceworker.js').then(registration => {
-          // Registration was successful
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, err => {
-          // registration failed :(
-          console.log('ServiceWorker registration failed: ', err);
-        });
+        navigator.serviceWorker.register('/serviceworker.js');
       });
     }
   </script>

@@ -38,9 +38,9 @@ self.addEventListener('fetch', event => {
     );
 
     event.waitUntil(
-      updateItem(event.request, htmlCache)
+      updateItem(event.request, htmlCache).then(response => refreshClient(response))
     );
-  } else if(isMainResourceGetRequest(event.request)) {
+  } else if(isMainResourceGetRequest(event.request) || event.request.url.includes('manifest')) {
     event.respondWith(
       caches.open(otherCache)
         .then(cache => cache.match(event.request))
@@ -81,28 +81,35 @@ async function updateItem(request, cacheName) {
       }
     });
 
-    if(response.status === 304) return;
-
-    const cache = await caches.open(cacheName);
     const copy = response.clone();
-  
-    await cache.put(request, copy);
-    refreshClient();
+    if(response.status === 304) return null;
+
+    return caches.open(cacheName).then(cache => {
+      return cache.put(request, copy).then(() => {
+        return response;
+      })
+    });
+
   } catch {
     return caches.match('/offline/');
   }
 }
 
-function refreshClient() {
-  return self.clients.matchAll().then(clients => {
-    const message = {
-      type: 'refresh'
-    };
-
-    clients.forEach(client => {
-      client.postMessage(JSON.stringify(message));
+function refreshClient(response) {
+  if(!response || !response.url) return;
+  
+  return setTimeout(() => {
+    return self.clients.matchAll().then(clients => {
+      const message = {
+        type: 'refresh',
+        url: response.url
+      };
+  
+      clients.forEach(client => {
+        client.postMessage(JSON.stringify(message));
+      });
     });
-  });
+  }, 50)
 }
 
 function isHtmlGetRequest(request) {
