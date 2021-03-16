@@ -4,6 +4,7 @@ require('dotenv').config();
 
 import CryptoCurrency from './models/CryptoCurrency';
 import { cpData } from './modules/api';
+import init from './modules/init';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,15 +15,7 @@ app.set('views', path.join(__dirname, '..', 'src', 'views'));
 app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 
 (async () => {
-
-  console.log('Retrieving initial essential data...');
-  let coins: CryptoCurrency[] = await cpData('/coins');
-  coins = coins
-    .map((d: any) => new CryptoCurrency(d.id, d.symbol, d.name, d.rank))
-    .filter((c: CryptoCurrency) => c.rank !== 0 && c.rank <= 20);
-  
-  console.log('Top 20 loaded, loading more details of the top 20 now...');
-  await Promise.all(coins.map(async c => c.refreshData()));
+  const coins = await init();
   
   app.get('/', function (req, res) {
     return res.render('overview', { coins });
