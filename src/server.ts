@@ -3,7 +3,6 @@ import path from 'path';
 require('dotenv').config();
 
 import CryptoCurrency from './models/CryptoCurrency';
-import { cpData } from './modules/api';
 import init from './modules/init';
 
 const app = express();
