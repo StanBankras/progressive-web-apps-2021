@@ -8,6 +8,7 @@ import { cpData } from './modules/api';
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.enable('etag');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'src', 'views'));
 app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
@@ -23,11 +24,12 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
   console.log('Top 20 loaded, loading more details of the top 20 now...');
   await Promise.all(coins.map(async c => c.refreshData()));
   
-  app.get('/', function(req, res) {   
-    res.render('overview', { coins });
+  app.get('/', function (req, res) {
+    if (req.stale) return res.sendStatus(304);
+    return res.render('overview', { coins });
   });
   
-  app.get('/coin/:id', function(req, res) {   
+  app.get('/coin/:id', function (req, res) {
     const coin: CryptoCurrency | undefined = coins.find(c => c.id === req.params.id);
     if (!coin) return res.sendStatus(404);
 
@@ -47,7 +49,7 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
     res.render('detail', { coin, table });
   });
 
-  app.get('/offline', function(req, res) {   
+  app.get('/offline', function(req, res) {
     res.render('offline');
   });
   

@@ -36,6 +36,10 @@ self.addEventListener('fetch', event => {
         .then(response => response ? response : fetchAndCache(event.request, htmlCache))
         .catch(() => caches.match('/offline/'))
     );
+
+    event.waitUntil(
+      updateItem(event.request, htmlCache)
+    );
   } else if(isMainResourceGetRequest(event.request)) {
     event.respondWith(
       caches.open(otherCache)
@@ -57,6 +61,47 @@ function fetchAndCache(request, cacheName) {
     });
 
     return response;
+  });
+}
+
+async function updateItem(request, cacheName) {
+  try {
+    const match = await caches.match(request);
+
+    let ETag;
+    if(match) {
+      ETag = match.headers.get('ETag');
+    }
+
+    const response = await fetch(request.url, {
+      method: 'GET',
+      headers: {
+        'ETag': ETag,
+        'if-none-match': ETag
+      }
+    });
+
+    if(response.status === 304) return;
+
+    const cache = await caches.open(cacheName);
+    const copy = response.clone();
+  
+    await cache.put(request, copy);
+    refreshClient();
+  } catch {
+    return caches.match('/offline/');
+  }
+}
+
+function refreshClient() {
+  return self.clients.matchAll().then(clients => {
+    const message = {
+      type: 'refresh'
+    };
+
+    clients.forEach(client => {
+      client.postMessage(JSON.stringify(message));
+    });
   });
 }
 
