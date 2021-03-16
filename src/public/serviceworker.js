@@ -1,11 +1,13 @@
-const cacheName = 'v1';
+const cacheVersion = '1.1';
+const coreCache = `core-cache-${cacheVersion}`;
+const htmlCache = `html-cache-${cacheVersion}`;
+const otherCache = `other-cache-${cacheVersion}`;
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(cacheName)
+    caches.open(coreCache)
       .then(cache => cache.addAll(['/offline/']))
   );
-
   self.skipWaiting();
 });
 
@@ -16,23 +18,29 @@ self.addEventListener('activate', event => {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            console.log('Service Worked: Clearing Old Cache');
+          if(![coreCache, htmlCache, otherCache].includes(cache)) {
+            console.log('Service Worked: Clearing Old Cache: ' + cache);
             return caches.delete(cache);
           }
         })
       )
     })
-  )
+  );
 });
 
 self.addEventListener('fetch', event => {
-  if (isHtmlGetRequest(event.request) || isMainResourceGetRequest(event.request)) {
+  if (isHtmlGetRequest(event.request)) {
     event.respondWith(
-      caches.open(cacheName)
+      caches.open(htmlCache)
         .then(cache => cache.match(event.request))
-        .then(response => response ? response : fetchAndCache(event.request, cacheName))
+        .then(response => response ? response : fetchAndCache(event.request, htmlCache))
         .catch(() => caches.match('/offline/'))
+    );
+  } else if(isMainResourceGetRequest(event.request)) {
+    event.respondWith(
+      caches.open(otherCache)
+        .then(cache => cache.match(event.request))
+        .then(response => response ? response : fetchAndCache(event.request, otherCache))
     );
   } else {
     event.respondWith(
@@ -49,7 +57,7 @@ function fetchAndCache(request, cacheName) {
     });
 
     return response;
-  }).catch(() => caches.match('/offline/'));
+  });
 }
 
 function isHtmlGetRequest(request) {
