@@ -35,31 +35,36 @@ export default {
       targets: [
         { 
           src: 'src/public/img/*',
-          dest: 'dist/img'
-        },
-        { 
-          src: 'src/public/views/*',
-          dest: 'dist/views'
+          dest: 'dist/public/img'
         },
         { 
           src: 'src/public/css/style.css',
-          dest: 'dist/css',
+          dest: 'dist/public/css',
           rename: (name, extension) => `${name}-${hashes['style.css']}.${extension}`,
           transform: (contents) => new CleanCSS().minify(contents).styles
         },
         { 
           src: 'src/public/js/index.js',
-          dest: 'dist/js',
+          dest: 'dist/public/js',
           rename: (name, extension) => `${name}-${hashes['index.js']}.${extension}`,
-          transform: () => uglify.minify(fs.readFileSync(path.join(__dirname, 'src', 'public', 'js', 'index.js'), 'utf8'), {}).code
+          transform: () => uglify.minify(fs.readFileSync(path.join(__dirname, 'src', 'public', 'js', 'index.js'), 'utf8'), {}).code.replace('%service_worker%', `serviceworker-${hashes['serviceworker.js']}.js`)
+        },
+        { 
+          src: 'src/public/manifest.json',
+          dest: 'dist/public'
         },
         { 
           src: 'src/public/serviceworker.js',
-          dest: 'dist',
+          dest: 'dist/public',
           rename: (name, extension) => `${name}-${hashes['serviceworker.js']}.${extension}`,
           transform: () => uglify.minify(fs.readFileSync(path.join(__dirname, 'src', 'public', 'serviceworker.js'), 'utf8'), {}).code
         },
-        { src: 'src/views/', dest: 'dist' }
+        { src: 'src/views/', dest: 'dist' },
+        { 
+          src: 'src/views/partials/header.ejs',
+          dest: 'dist/views/partials', 
+          transform: (contents) => contents.toString('utf8').replace('%js%', `index-${hashes['index.js']}.js`).replace('%style%', `style-${hashes['style.css']}.css`)
+        }
       ]
     }),
     typescript(),
