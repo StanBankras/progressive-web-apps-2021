@@ -48,7 +48,7 @@ to do
 
 ## TODO
 - [ ] "Refresh page to see new content", if new content was found
-- [ ] Catch app install even, make custom installation popup
+- [ ] Catch app install event, make custom installation popup
 - [ ] Clientside javascript encode/minify
 - [ ] Offline page show cached pages
 
