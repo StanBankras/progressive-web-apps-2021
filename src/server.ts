@@ -16,6 +16,10 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 
 (async () => {
   let coins = await init();
+
+  setInterval(async () => {
+    coins = await init();
+  }, 900000);
   
   app.get('/', async (req, res) => {
     const html = await ejs.renderFile(path.join(__dirname, '..', 'src', 'views', 'overview.ejs'), { coins });
