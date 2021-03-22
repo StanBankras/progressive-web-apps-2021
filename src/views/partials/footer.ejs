@@ -4,21 +4,6 @@
     <p>Powered by</p>
     <img src="/img/coinpaprika-logo.svg" alt="coinpaprika-logo">
   </footer>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('message', event => {
-        const data = JSON.parse(event.data);
-        if(window.location.href === data.url && data.type === 'refresh') {
-          console.log(data.url, 'refresh');
-          window.location.reload();
-        }
-      });
-
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/serviceworker.js');
-      });
-    }
-  </script>
   </body>
 
 </html>

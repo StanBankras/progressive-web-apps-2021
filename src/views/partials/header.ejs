@@ -7,6 +7,35 @@
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="/css/style.css">
     <title>Coinevents</title>
+    <script defer>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.addEventListener('message', event => {
+          const data = JSON.parse(event.data);
+          if(window.location.href === data.url && data.type === 'refresh') {
+            setTimeout(() => {
+              const body = document.querySelector('body');
+              const refreshHtml = document.createElement('div');
+              refreshHtml.setAttribute('id', 'refresh');
+              const text = document.createElement('p');
+              text.textContent = 'There is new content available for this page.';
+              const button = document.createElement('button');
+              button.textContent = 'Click to refresh';
+              button.addEventListener('click', () => {
+                window.location.reload();
+              });
+              text.appendChild(button);
+              refreshHtml.appendChild(text);
+        
+              body.appendChild(refreshHtml);
+            }, 1000);
+          }
+        });
+
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/serviceworker.js');
+        });
+      }
+    </script>
   </head>
   <body>
     <header>

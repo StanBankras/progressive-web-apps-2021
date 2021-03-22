@@ -173,3 +173,24 @@ table {
 .volume {
   margin-top: 2rem;
 }
+
+#refresh {
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 2rem;
+  background-color: #77C9FF;
+  color: white;
+  button {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    color: white;
+    border: 0px;
+    background-color: #4996ca;
+    margin-left: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}

@@ -23,7 +23,7 @@ export default {
     typescript(),
     terser()
   ],
-  external: ['express', 'path', 'node-fetch', 'crypto', 'ejs'],
+  external: ['express', 'path', 'node-fetch', 'crypto', 'ejs', 'compression'],
   watch: {
     include: ['src/**'],
     extra: ['src/**'],

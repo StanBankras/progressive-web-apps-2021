@@ -81,15 +81,13 @@ async function updateItem(request, cacheName) {
 
     if(response.status === 304) return null;
 
-    setTimeout(() => {
-      const copy = response.clone();
-  
-      return caches.open(cacheName).then(cache => {
-        return cache.put(request, copy).then(() => {
-          return response;
-        })
-      });
-    }, 50);
+    const copy = response.clone();
+
+    return caches.open(cacheName).then(cache => {
+      return cache.put(request, copy).then(() => {
+        return response;
+      })
+    });
 
   } catch {
     return caches.match('/offline/');
