@@ -46,6 +46,12 @@ The concept is to make an alternative to [Coinpaprika](https://coinpaprika.com/)
 ## :gear: Installation
 to do
 
+## TODO
+- [ ] "Refresh page to see new content", if new content was found
+- [ ] Catch app install even, make custom installation popup
+- [ ] Clientside javascript encode/minify
+- [ ] Offline page show cached pages
+
 ## Resources
 * [TSConfig docs](https://www.typescriptlang.org/tsconfig)
 * [Options for compiling TS](https://medium.com/@lucksp_22012/3-options-to-compile-typescript-to-js-rollup-tsc-babel-3319977a6946)
