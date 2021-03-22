@@ -49,8 +49,8 @@ to do
 ## TODO
 - [x] "Refresh page to see new content", if new content was found
 - [x] Compression serverside
+- [x] Clientside javascript encode/minify
 - [ ] Catch app install event, make custom installation popup
-- [ ] Clientside javascript encode/minify
 
 ## Resources
 * [TSConfig docs](https://www.typescriptlang.org/tsconfig)
