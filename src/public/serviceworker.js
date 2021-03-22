@@ -67,28 +67,29 @@ function fetchAndCache(request, cacheName) {
 async function updateItem(request, cacheName) {
   try {
     const match = await caches.match(request);
+    if(!match) return null;
 
-    let ETag;
-    if(match) {
-      ETag = match.headers.get('ETag');
-    }
+    const hash = match.headers.get('content-hash');
+    if(!hash) return null;
 
     const response = await fetch(request.url, {
       method: 'GET',
       headers: {
-        'ETag': ETag,
-        'if-none-match': ETag
+        'content-hash': hash
       }
     });
 
-    const copy = response.clone();
     if(response.status === 304) return null;
 
-    return caches.open(cacheName).then(cache => {
-      return cache.put(request, copy).then(() => {
-        return response;
-      })
-    });
+    setTimeout(() => {
+      const copy = response.clone();
+  
+      return caches.open(cacheName).then(cache => {
+        return cache.put(request, copy).then(() => {
+          return response;
+        })
+      });
+    }, 50);
 
   } catch {
     return caches.match('/offline/');

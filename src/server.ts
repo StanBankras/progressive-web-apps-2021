@@ -21,11 +21,10 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
     const html = await ejs.renderFile(path.join(__dirname, '..', 'src', 'views', 'overview.ejs'), { coins });
     const hash = crypto.createHash('md5').update(html).digest('hex');
 
-    const contentHash: any = req.headers['Content-Hash'];
-
+    const contentHash: any = req.headers['content-hash'];
     if (contentHash && contentHash === hash) return res.sendStatus(304);
 
-    res.set('Content-Hash', hash).send(html);
+    res.set('content-hash', hash).send(html);
   });
   
   app.get('/coin/:id', async (req, res) => {
@@ -47,11 +46,10 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
     const html = await ejs.renderFile(path.join(__dirname, '..', 'src', 'views', 'detail.ejs'), { coin, table });
     const hash = crypto.createHash('md5').update(html).digest('hex');
 
-    const contentHash: any = req.headers['Content-Hash'];
-
+    const contentHash: any = req.headers['content-hash'];
     if (contentHash && contentHash === hash) return res.sendStatus(304);
 
-    res.set('Content-Hash', hash).send(html);
+    res.set('content-hash', hash).send(html);
   });
 
   app.get('/offline', (req, res) => {
