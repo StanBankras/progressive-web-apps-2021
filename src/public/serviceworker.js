@@ -69,13 +69,13 @@ async function updateItem(request, cacheName) {
     const match = await caches.match(request);
     if(!match) return null;
 
-    const hash = match.headers.get('content-hash');
+    const hash = match.headers.get('ETag');
     if(!hash) return null;
 
     const response = await fetch(request.url, {
       method: 'GET',
       headers: {
-        'content-hash': hash
+        'ETag': hash
       }
     });
 

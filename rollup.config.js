@@ -15,7 +15,10 @@ export default {
       targets: 'dist/*'
     }),
     copy({
-      targets: [{ src: 'src/public/*', dest: 'dist' }]
+      targets: [
+        { src: 'src/public/*', dest: 'dist' },
+        { src: 'src/views/', dest: 'dist' }
+      ]
     }),
     typescript(),
     terser()

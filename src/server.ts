@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import crypto from 'crypto';
 import ejs from 'ejs';
+import compression from 'compression';
 require('dotenv').config();
 
 import CryptoCurrency from './models/CryptoCurrency';
@@ -12,6 +13,7 @@ const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'src', 'views'));
+app.use(compression());
 app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 
 (async () => {
@@ -22,13 +24,13 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
   }, 900000);
   
   app.get('/', async (req, res) => {
-    const html = await ejs.renderFile(path.join(__dirname, '..', 'src', 'views', 'overview.ejs'), { coins });
+    const html = await ejs.renderFile(path.join(__dirname, 'views', 'overview.ejs'), { coins });
     const hash = crypto.createHash('md5').update(html).digest('hex');
 
-    const contentHash: any = req.headers['content-hash'];
+    const contentHash: any = req.headers['etag'];
     if (contentHash && contentHash === hash) return res.sendStatus(304);
 
-    res.set('content-hash', hash).send(html);
+    res.set('ETag', hash).send(html);
   });
   
   app.get('/coin/:id', async (req, res) => {
@@ -47,20 +49,20 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 
     const th = Object.keys(tr[0]);
     const table = { headers: th, rows: tr };
-    const html = await ejs.renderFile(path.join(__dirname, '..', 'src', 'views', 'detail.ejs'), { coin, table });
+    const html = await ejs.renderFile(path.join(__dirname, 'views', 'detail.ejs'), { coin, table });
     const hash = crypto.createHash('md5').update(html).digest('hex');
 
-    const contentHash: any = req.headers['content-hash'];
+    const contentHash: any = req.headers['etag'];
     if (contentHash && contentHash === hash) return res.sendStatus(304);
 
-    res.set('content-hash', hash).send(html);
+    res.set('ETag', hash).send(html);
   });
 
   app.get('/offline', (req, res) => {
     res.render('offline');
   })
   
-  app.listen(port, function() {
+  app.listen(port, () => {
     console.log(`server is running on port ${port}`);
   });
 
