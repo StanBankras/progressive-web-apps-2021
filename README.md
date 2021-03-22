@@ -60,6 +60,7 @@ to do
 * [NPM run all](https://dev.to/danywalls/how-to-run-multiple-npm-scripts-with-npm-run-all-3ad2)
 * [Getting started with Serviceworkers](https://developers.google.com/web/fundamentals/primers/service-workers)
 * [Expiration date for cache](https://gomakethings.com/how-to-set-an-expiration-date-for-items-in-a-service-worker-cache/)
+* [PWA custom install prompt](https://web.dev/customize-install/)
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

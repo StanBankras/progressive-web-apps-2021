@@ -1,48 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#2271a5">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Coinevents</title>
-    <script defer>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.addEventListener('message', event => {
-          const data = JSON.parse(event.data);
-          if(window.location.href === data.url && data.type === 'refresh') {
-            setTimeout(() => {
-              const body = document.querySelector('body');
-              const refreshHtml = document.createElement('div');
-              refreshHtml.setAttribute('id', 'refresh');
-              const text = document.createElement('p');
-              text.textContent = 'There is new content available for this page.';
-              const button = document.createElement('button');
-              button.textContent = 'Click to refresh';
-              button.addEventListener('click', () => {
-                window.location.reload();
-              });
-              text.appendChild(button);
-              refreshHtml.appendChild(text);
-        
-              body.appendChild(refreshHtml);
-            }, 3000);
-          }
-        });
 
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/serviceworker.js');
-        });
-      }
-    </script>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <h1>Coinevents</h1>
-        <p class="tagline">Latest and upcoming events</p>
-      </div>
-    </header>
-    <main>
-      <div class="container">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2271a5">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Coinevents</title>
+  <script defer src="/js/index.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1>Coinevents</h1>
+      <p class="tagline">Latest and upcoming events</p>
+    </div>
+  </header>
+  <main>
+    <div class="container">
