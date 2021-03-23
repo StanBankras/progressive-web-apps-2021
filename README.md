@@ -50,7 +50,8 @@ to do
 - [x] "Refresh page to see new content", if new content was found
 - [x] Compression serverside
 - [x] Clientside javascript encode/minify
-- [ ] Catch app install event, make custom installation popup
+- [x] Revision hash static files
+- [x] Catch app install event, make custom installation popup
 
 ## Resources
 * [TSConfig docs](https://www.typescriptlang.org/tsconfig)
