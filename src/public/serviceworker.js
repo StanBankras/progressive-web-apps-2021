@@ -47,9 +47,7 @@ self.addEventListener('fetch', event => {
         .then(response => response ? response : fetchAndCache(event.request, otherCache))
     );
   } else {
-    event.respondWith(
-      fetch(event.request.url).catch(() => caches.match('/offline/'))
-    );
+    console.log(event.request);
   }
 });
 
@@ -116,5 +114,5 @@ function isHtmlGetRequest(request) {
 }
 
 function isMainResourceGetRequest(request) {
-  return request.method === 'GET' && (request.destination === 'style' || request.destination === 'image' || request.url.includes('manifest'));
+  return request.method === 'GET' && (request.destination === 'style' || request.destination === 'image' || request.url.includes('manifest') || request.destination === 'script');
 }

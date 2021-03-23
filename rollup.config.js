@@ -29,7 +29,7 @@ export default {
   },
   plugins: [
     del({
-      targets: 'dist/*'
+      targets: 'dist'
     }),
     copy({
       targets: [
