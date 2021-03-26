@@ -46,8 +46,6 @@ self.addEventListener('fetch', event => {
         .then(cache => cache.match(event.request))
         .then(response => response ? response : fetchAndCache(event.request, otherCache))
     );
-  } else {
-    console.log(event.request);
   }
 });
 

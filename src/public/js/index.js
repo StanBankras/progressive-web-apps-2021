@@ -16,17 +16,21 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     const deferredPrompt = e;
-    setTimeout(
-      () => renderPopup(
-        'Want to get an even beter experience?',
-        'Install Coinevents as app!',
-        async () => {
-          await deferredPrompt.prompt();
-          document.querySelector('#refresh').remove();
-        }
-      ), 
-      15000
-    );
+    const stored = localStorage.getItem('install');
+    if(!stored || (stored && JSON.parse(stored).date + 24 * 60 * 60 * 1000 < Date.now())) {
+      setTimeout(
+        () => renderPopup(
+          'Want to get an even beter experience?',
+          'Install Coinevents as app!',
+          async () => {
+            await deferredPrompt.prompt();
+            document.querySelector('#refresh').remove();
+            localStorage.setItem('install', JSON.stringify({ date: Date.now() }));
+          }
+        ), 
+        15000
+      );
+    }
   });
 
   window.addEventListener('load', () => {
