@@ -74,8 +74,7 @@ async function updateItem(request, cacheName) {
         'ETag': hash
       }
     });
-
-    if(response.status === 304) return null;
+    if(response.status === 304 || response.headers.get('ETag') === hash) return null;
 
     const copy = response.clone();
 

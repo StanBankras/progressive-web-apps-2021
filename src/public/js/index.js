@@ -34,7 +34,7 @@ if ('serviceWorker' in navigator) {
   });
 
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/%service_worker%');
+    navigator.serviceWorker.register('/serviceworker.js');
   });
 }
 

@@ -56,7 +56,6 @@ export default {
         { 
           src: 'src/public/serviceworker.js',
           dest: 'dist/public',
-          rename: (name, extension) => `${name}-${hashes['serviceworker.js']}.${extension}`,
           transform: () => uglify.minify(fs.readFileSync(path.join(__dirname, 'src', 'public', 'serviceworker.js'), 'utf8'), {}).code
         },
         { src: 'src/views/', dest: 'dist' },
