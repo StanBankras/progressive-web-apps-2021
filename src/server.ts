@@ -14,7 +14,15 @@ const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(compression());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  setHeaders: (res, path) => {
+    const hashRegExp = new RegExp('\\-[0-9a-z]{32}\\.');
+
+    if(hashRegExp.test(path)) {
+      res.setHeader('Cache-Control', 'max-age=31536000');
+    }
+  }
+}));
 
 (async () => {
   let coins = await init();
