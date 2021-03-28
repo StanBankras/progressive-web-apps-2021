@@ -44,7 +44,24 @@ The concept is to make an alternative to [Coinpaprika](https://coinpaprika.com/)
 :heavy_check_mark: Find out which pairs the coin is traded against and where
 
 ## :gear: Installation
-to do
+Install dependencies
+```
+npm install
+// or
+yarn install
+```
+Watch files
+```
+npm run watch
+// or
+yarn watch
+```
+Run server
+```
+npm run dev
+// or
+yarn dev
+```
 
 ## TODO
 - [x] "Refresh page to see new content", if new content was found
