@@ -34,6 +34,23 @@ Coinpaprika limits the amount of requests per IP to [10 per second](https://api.
 ## :pencil2: Concept
 The concept is to make an alternative to [Coinpaprika](https://coinpaprika.com/) where I show upcoming events and most recent tweets of a project, instead of raw data. This could help a normal person to better understand what is about to happen to the project that is behind the coin.
 
+## :memo: Packages used
+* Rollup - *Transpile, transform and rename files with different build steps*
+* Clean CSS - *Minify CSS*
+* Compression - *Enable compression server-side so client receives files more compact*
+* Crypto - *Create hashes from strings for cache invalidation*
+* ejs - *Templating engine*
+* typescript - *Write javascript in a more strict, typed way*
+* uglify-js - *Minify javascript*
+
+## :construction_worker: Build steps
+1. Delete current dist folder
+2. Copy static files from src to dist folder
+  - Add hash to CSS and clientside JS for cache invalidation
+  - Minify & reference hashed filenames correctly in related files
+3. Transpile Typescript to javascript
+4. Minify javascript
+
 ## :rocket: Features
 :heavy_check_mark: Most recent tweet of all top 20 cryptos
 
