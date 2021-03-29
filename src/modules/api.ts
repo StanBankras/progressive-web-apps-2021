@@ -25,5 +25,4 @@ export async function cpData(url: string, params?: any): Promise<any> {
       }
     });
   });
-
 }

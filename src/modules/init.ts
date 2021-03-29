@@ -1,5 +1,6 @@
 import CryptoCurrency from '../models/CryptoCurrency';
 import { cpData } from './api';
+
 export default async function () {
   console.log('Retrieving initial essential data...');
   let coins: CryptoCurrency[] = await cpData('/coins');

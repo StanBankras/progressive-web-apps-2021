@@ -16,6 +16,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(compression());
 app.use(express.static(path.join(__dirname, 'public'), {
   setHeaders: (res, path) => {
+    // Since the MD5 hashed filenames have 32 characters, being numbers or letters
     const hashRegExp = new RegExp('\\-[0-9a-z]{32}\\.');
 
     if(hashRegExp.test(path)) {
@@ -27,11 +28,13 @@ app.use(express.static(path.join(__dirname, 'public'), {
 (async () => {
   let coins = await init();
 
+  // Refresh data periodically
   setInterval(async () => {
     coins = await init();
   }, 900000);
   
   app.get('/', async (req, res) => {
+    // Render & hash files to validate or invalidate cache (ETags)
     const html = await ejs.renderFile(path.join(__dirname, 'views', 'overview.ejs'), { coins });
     const hash = crypto.createHash('md5').update(html).digest('hex');
 
